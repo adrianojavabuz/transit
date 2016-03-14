@@ -9,6 +9,7 @@ import java.util.List;
 import org.joda.time.MutableDateTime;
 import org.joda.time.ReadableInstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.config.AppConfig;
@@ -20,6 +21,7 @@ import com.google.maps.model.TransitMode;
 import com.google.maps.model.TravelMode;
 
 @Service("transitService")
+@Profile("prod")
 public class TransitServiceImpl implements TransitService {
 	
 
