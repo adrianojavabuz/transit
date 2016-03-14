@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion"
+	xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+	ddl:bundle-includes="bootstrap-3.2.0" lang="en">
+
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous"></link>
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous"></link>
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+</head>
+
+<div class="container">
+<h2>Results:</h2>
+
+<table class="table table-hover">
+	<tr>
+    	<th>Origin</th>
+    	<th>Destination</th>
+    	<th>Distance</th> 
+    	<th>Duration</th>
+    	<th>Status</th>
+    </tr>
+    <tr th:each="result : ${results}">
+        <td th:text="${result.origin}">...</td>
+        <td th:text="${result.destination}">...</td>
+        <td th:text="${result.distance}">...</td>
+        <td th:text="${result.duration}">...</td>
+        <td th:text="${result.status}">...</td>
+    </tr>
+</table>
+</div>
+
+</html>

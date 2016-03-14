@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion"
+	xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+	ddl:bundle-includes="bootstrap-3.2.0" lang="en">
+
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous"></link>
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous"></link>
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+</head>
+
+<form th:action="@{/process}" method="post">
+	<div class="container">
+		<h2>Enter destinations:</h2>
+		<textarea id="targets" name="targets" rows="10" cols="100"></textarea>
+		<br />
+		<button class="btn btn-default" type="reset">Clear</button>
+		<button class="btn btn-default" type="submit">Calculate</button>
+	</div>
+</form>
+
+</html>
