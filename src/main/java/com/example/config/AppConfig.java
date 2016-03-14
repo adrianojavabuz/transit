@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource("file:d://app.properties")
+@PropertySource("file:c://temp//transit.properties")
 public class AppConfig {
 
 	@Autowired
@@ -22,6 +22,22 @@ public class AppConfig {
 
 	public String getWorkAddress(){
 		return env.getProperty("address.work");
+	}
+
+	public String getProxyUrl(){
+		return env.getProperty("proxy.url");
+	}
+	
+	public String getProxyPort(){
+		return env.getProperty("proxy.port");
+	}
+
+	public String getProxyUser(){
+		return env.getProperty("proxy.user");
+	}
+
+	public String getProxyPassword(){
+		return env.getProperty("proxy.password");
 	}
 
 }

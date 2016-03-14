@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,9 +35,12 @@ public class TransitServiceImpl implements TransitService {
 		List<String> names = Arrays.asList(targets.trim().split("\n"));
 		
 		GeoApiContext context = new GeoApiContext().setApiKey(config.getGooleAPIKey());
+		setProxy(context);
 		ReadableInstant arrivalTime = new MutableDateTime(2016,4,1,9,0,0,0);
 		ArrayList<String> origins = new ArrayList<String>();
 		ArrayList<String> destinations = new ArrayList<String>();
+		
+		
 		
 		for (String name : names) {
 			name = name.trim();
@@ -45,13 +50,11 @@ public class TransitServiceImpl implements TransitService {
 		
 		try {
 			DistanceMatrixRow rows[] = 
-					//DistanceMatrixApi.getDistanceMatrix(context,origins.toArray(new String[origins.size()]), destinations.toArray(new String[origins.size()]))
 					DistanceMatrixApi.getDistanceMatrix(context,new String[]{name}, new String[]{getDestinationAddress()})
 	    			.mode(TravelMode.TRANSIT)
 	    			.transitModes(TransitMode.BUS, TransitMode.RAIL)
 	    			.arrivalTime(arrivalTime).await().rows;
 	    	
-	    	//result = buildTransitResult(origins,destinations,rows);
 	    	result.add(buildSingleTransitResult(name,getDestinationAddress(),rows));
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -62,6 +65,15 @@ public class TransitServiceImpl implements TransitService {
 		return result;
 	}
 
+	private void setProxy(GeoApiContext context) {
+		if (!"".equalsIgnoreCase(config.getProxyUrl())
+				&& !"".equalsIgnoreCase(config.getProxyPort()) ) {
+			
+			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(config.getProxyUrl(), Integer.valueOf(config.getProxyPort())));
+			context.setProxy(proxy);
+		}
+	}
+
 	private TransitResult buildSingleTransitResult(String origin, String destination, DistanceMatrixRow[] rows) {
 		TransitResult t = new TransitResult(origin,destination,
 				rows[0].elements[0].distance == null ? "NULL" : rows[0].elements[0].distance.toString(),
@@ -70,23 +82,6 @@ public class TransitServiceImpl implements TransitService {
 		return t;
 	}
 
-	private List<TransitResult> buildTransitResult(ArrayList<String> origins, ArrayList<String> destinations, DistanceMatrixRow[] rows) {
-		
-		List<TransitResult> result = new ArrayList<TransitResult>();
-		int i = 0;
-		
-		for (DistanceMatrixRow r : rows) {
-			result.add(new TransitResult(
-				origins.get(i),
-				destinations.get(i++),
-				r.elements[0].distance == null ? "NULL" : r.elements[0].distance.toString(),
-				r.elements[0].duration == null ? "NULL" : r.elements[0].duration.toString(),
-				r.elements[0].status.toString()));
-		}
-
-		return result;
-	}
-	
 	private String getDestinationAddress() {
 		return config.getWorkAddress();
 	}
